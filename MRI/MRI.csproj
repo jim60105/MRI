@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>f6e69f2d-b5a1-4f37-89ba-57c50e04b3f1</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="show_map_6.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="show_map_6.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Startup.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
+
+</Project>
