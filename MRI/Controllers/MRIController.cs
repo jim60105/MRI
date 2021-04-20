@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -24,7 +25,12 @@ namespace MRI.Controllers
         [HttpPost]
         public ActionResult Post([FromForm] StrokeInfo info)
         {
-            string jsonPath = Path.Combine(@"C:\MRI\mriresult" ,Directory.GetParent(info.Path).ToString(), "stroke.json");
+            string rootDirectory = @"C:\MRI\mriresult";
+            string path = HttpUtility.UrlDecode(info.Path);
+            string directory = path.Substring(0, path.LastIndexOf("/")).Replace("/", "");
+            string jsonPath = Path.Combine(rootDirectory, directory, "stroke.json");
+
+            Directory.CreateDirectory(Path.GetDirectoryName(jsonPath));
 
             // Delete the file if it exists.
             if (System.IO.File.Exists(jsonPath))
@@ -41,7 +47,7 @@ namespace MRI.Controllers
                         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                         WriteIndented = true
                     }));
-            return new OkResult();
+            return new NoContentResult();
         }
     }
 }
